@@ -1,0 +1,9 @@
+requests
+speechrecognition
+sentence-transformers
+torch
+numpy
+nltk
+wikipedia-api
+random
+textblob
