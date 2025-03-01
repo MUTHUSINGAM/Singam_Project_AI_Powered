@@ -1,0 +1,10 @@
+requests
+speechrecognition
+sentence-transformers
+torch
+numpy
+nltk
+wikipedia-api
+textblob
+gtts
+pyttsx3
