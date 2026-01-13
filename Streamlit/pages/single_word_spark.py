@@ -96,7 +96,7 @@ def start_quiz(num_questions):
     st.session_state.total_score = 0
     st.session_state.quiz_started = True
     st.session_state.auto_next = True  # ✅ Start auto mode
-    st.experimental_rerun()
+    st.rerun()
 
 # ✅ Process the answer and move to the next question
 def process_answer():
@@ -120,7 +120,7 @@ def process_answer():
 
         st.session_state.current_question += 1
         if st.session_state.current_question < len(st.session_state.questions):
-            st.experimental_rerun()  # ✅ Automatically move to next question
+            st.rerun()  # ✅ Automatically move to next question
 
 # ✅ Streamlit UI
 st.title("🎙️ English Speaking Practice Quiz (Synonym Edition)")
@@ -157,4 +157,4 @@ elif st.session_state.current_question == len(st.session_state.questions):
         st.session_state.questions = None
         st.session_state.current_question = 0
         st.session_state.total_score = 0
-        st.experimental_rerun()
+        st.rerun()
