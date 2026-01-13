@@ -49,15 +49,19 @@ def get_synonym_questions(amount=5):
 
 # ✅ Function to recognize speech input with improved accuracy
 def recognize_speech():
-    recognizer = sr.Recognizer()
-    with sr.Microphone() as source:
-        st.info("🎤 Listening... Please speak your answer.")
-        recognizer.adjust_for_ambient_noise(source, duration=0.5)  # ✅ Adjust noise settings
-        try:
-            audio = recognizer.listen(source, timeout=3, phrase_time_limit=3)  # ✅ Reduced timeout for faster response
-            return recognizer.recognize_google(audio).lower()
-        except (sr.WaitTimeoutError, sr.UnknownValueError, sr.RequestError):
-            return None
+    try:
+        recognizer = sr.Recognizer()
+        with sr.Microphone() as source:
+            st.info("🎙 Listening... Please speak your answer.")
+            recognizer.adjust_for_ambient_noise(source, duration=0.5)  # ✅ Adjust noise settings
+            try:
+                audio = recognizer.listen(source, timeout=3, phrase_time_limit=3)  # ✅ Reduced timeout for faster response
+                return recognizer.recognize_google(audio).lower()
+            except (sr.WaitTimeoutError, sr.UnknownValueError, sr.RequestError):
+                return None
+    except AttributeError:
+        st.warning("🚧 Microphone not available in this environment. Please try on your local machine.")
+        return None
 
 # ✅ Function to check answer relevance using Sentence-BERT
 def check_answer_relevance(user_answer, correct_answer):
@@ -137,7 +141,10 @@ elif st.session_state.current_question < len(st.session_state.questions):
     st.write(q['question'])
 
     # ✅ Automatically enable microphone & process answer
-    process_answer()
+    try:
+        process_answer()
+    except AttributeError:
+        st.warning("🚧 Microphone not available. This app requires audio input on your local machine.")
 
 elif st.session_state.current_question == len(st.session_state.questions):
     st.success(f"🎉 Quiz Completed! Your Final Score: {st.session_state.total_score} / {len(st.session_state.questions) * 15}")
