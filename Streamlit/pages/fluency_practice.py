@@ -11,12 +11,21 @@ import threading
 nltk.download('punkt')
 
 # Initialize the Text-to-Speech (TTS) engine
-engine = pyttsx3.init()
-engine.setProperty('rate', 150)  # Adjust speech speed
-engine.setProperty('volume', 1)  # Set volume
+engine = None
+try:
+    engine = pyttsx3.init()
+    engine.setProperty('rate', 150)  # Adjust speech speed
+    engine.setProperty('volume', 1)  # Set volume
+except RuntimeError:
+    # pyttsx3 not available on Streamlit Cloud (no espeak)
+    engine = None
 
 # ✅ Function to pronounce the current sentence in a separate thread
 def pronounce_current_sentence(sentence):
+    if engine is None:
+        st.warning("Text-to-speech is not available in this environment")
+        return
+    
     def speak():
         engine.say(sentence)
         engine.runAndWait()
