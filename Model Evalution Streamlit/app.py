@@ -17,13 +17,5 @@ pg = st.navigation([
 # Set global page configuration
 st.set_page_config(page_title="Speech Training & Gamified Learning App", page_icon="🎓")
 
-# Sidebar button to open external module
-st.sidebar.markdown("## Hearning Impaired People")
-st.sidebar.markdown("## Sound Make Sign")
-st.sidebar.markdown(
-    "[Speech to Sign Language](https://project-sms.onrender.com/) 🎯",
-    unsafe_allow_html=True
-)
-
 # Run the selected page
 pg.run()
